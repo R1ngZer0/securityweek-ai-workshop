@@ -8,6 +8,8 @@
   // so a new codespace is ready in about a minute.
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
+    // Lets `gh codespace ssh` reach the codespace (handy for helping someone remotely).
+    "ghcr.io/devcontainers/features/sshd:1": {},
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
 
