@@ -1,0 +1,36 @@
+{
+  // SecurityWeek AI Workshop environment: a Linux machine in the browser with Claude Code
+  // already installed. Nothing is installed on the attendee's own computer.
+  "name": "SecurityWeek AI Workshop",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+
+  // Python 3.11 and Git come with the base image; no build-from-source features,
+  // so a new codespace is ready in about a minute.
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+  },
+
+  // 2 cores is the smallest Codespaces machine, which stretches each attendee's
+  // free monthly allowance the furthest. Claude Code doesn't need more.
+  "hostRequirements": { "cpus": 2 },
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code"],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "workbench.startupEditor": "readme"
+      }
+    },
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
+  },
+
+  // Fails the build loudly if Claude Code didn't install, so a broken image
+  // shows up when the codespace is created rather than in the middle of class.
+  "postCreateCommand": "claude --version && echo 'Claude Code is installed. Type: claude'",
+
+  "remoteUser": "node"
+}
