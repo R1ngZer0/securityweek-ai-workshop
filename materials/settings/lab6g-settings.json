@@ -1,0 +1,57 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/originals/**)",
+      "Read(./.env)",
+      "WebFetch",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(rm *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "PowerShell(Invoke-WebRequest *)",
+      "PowerShell(Invoke-RestMethod *)",
+      "PowerShell(Remove-Item *)",
+      "mcp__playground-files__write_file",
+      "mcp__playground-files__edit_file",
+      "mcp__playground-files__move_file",
+      "mcp__playground-files__create_directory"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-originals.sh",
+            "args": []
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/log-tool-call.sh",
+            "args": []
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/log-tool-call.sh",
+            "args": []
+          }
+        ]
+      }
+    ]
+  }
+}
